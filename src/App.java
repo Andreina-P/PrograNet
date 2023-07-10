@@ -22,6 +22,7 @@ public class App extends Menu {
     static Set<String> apDatosNetwHombre  = new HashSet<>();
 
     public static void main(String[] args) throws Exception {
+        int apOpcionMenu=0;
         boolean login = apLogin();
         if (login == false) {
             System.exit(0);
@@ -29,45 +30,44 @@ public class App extends Menu {
 
         apRegistro();
         // limpiar pantalla
-
-        apVisualizarTema();
-
-        int apOpcionMenu = apMenu();
-        switch (apOpcionMenu) {
-            case 1:
-                apVisualizarTema();
-                System.out.println("AGREGAR AMIGO");
-                apRegistro();
-                break;
-            case 2:
-                apVisualizarTema();
-                System.out.println("AGREGAR AMIGO DE AMIGO");
-                System.out.println("\n<+> Agrega un amigo a tu amigo: ");
-                int apIDAmigo = Utility.obtenerCodigoValidado("+ Cual es el ID de tu amigo: ", apCodigos);
-                apRegistro();
-                Utility.validarExistenciaCodigo(apIDAmigo, apCodigos);
-
-                break;
-
-            case 3:
-                apVisualizarTema();
-                System.out.println("\nNETWORK ");
-
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 0:
-                System.out.println("Regresa pronto " + apUser);
-                System.exit(0);
-                break;
-        }
+        do {
+            apVisualizarTema();
+    
+            apOpcionMenu = apMenu();
+            switch (apOpcionMenu) {
+                case 1:
+                    apVisualizarTema();
+                    System.out.println("AGREGAR AMIGO");
+                    apRegistro();
+                    break;
+                case 2:
+                    apVisualizarTema();
+                    System.out.println("AGREGAR AMIGO DE AMIGO");
+                    System.out.println("\n<+> Agrega un amigo a tu amigo: ");
+                    int apIDAmigo = Utility.verifNumPosit("+ Cual es el ID de tu amigo: ");
+                    System.out.println( Utility.validarExistenciaCodigo(apIDAmigo, apCodigos, apDatosNetwork, apNetworkPresent, apDatosNetwHombre, apDatosNetwMujer));
+    
+                    break;
+    
+                case 3:
+                    apVisualizarTema();
+                    System.out.println("\nNETWORK ");
+    
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 0:
+                    System.out.println("Regresa pronto " + apUser);
+                    break;
+            }
+        } while (apOpcionMenu != 0);
 
     }
 
     private static void apVisualizarTema() {
-        System.out.println("-------------------------------");
+        System.out.println("\n-------------------------------");
         System.out.println("        NETWORKIN DE " + apTema);
         System.out.println("-------------------------------");
         System.out.println("usuario: " + apUser);
@@ -97,7 +97,7 @@ public class App extends Menu {
         System.out.println("4 MOSTRAR NETWORK AMIGOS");
         System.out.println("5 MOSTRAR NETWORK AMIGAS");
         System.out.println("0 SALIR");
-        int apOpcionMenu = Utility.verifOpcionMenu("\n<+> Ingresa opc", 0, 5);
+        int apOpcionMenu = Utility.verifOpcionMenu("\n<+> Ingresa opc: ", 0, 5);
         return apOpcionMenu;
     }
 

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import pkRedSocial.Persona;
+
 public class Utility {
     static Scanner sc = new Scanner(System.in);
 
@@ -139,12 +141,28 @@ public class Utility {
         return codigo;
     }
 
-    public static String validarExistenciaCodigo(int apIDAmigo, Set<Integer> codigosExistentes) {
+    public static String validarExistenciaCodigo(int apIDAmigo, Set<Integer> codigosExistentes, Set<Persona> apDatosNetwork, Set<String> apNetworkPresent, Set<String> apDatosNetwHombre, Set<String> apDatosNetwMujer) {
+        System.out.println("<+> Por favor registra");
+        int apID =      obtenerCodigoValidado("\n+ Codigo (ID): ", codigosExistentes);
+        String apNick = validarNickname("\n+ Nombre o nick: ");
+        int apEdad =    verifNumPosit("\n+ Edad: ");
+        char apSexo =   validarIngresoSexo("\n+ Sexo: (F/M) ");
+
         if (!codigosExistentes.contains(apIDAmigo)) {
-            codigosExistentes.remove(apIDAmigo);
-            return (":( Lo sentimos... No se ha encontrado a tu amigo");
+            codigosExistentes.remove(apID);
+            return ("\n :( Lo sentimos... No se ha encontrado a tu amigo");
+        }else if(codigosExistentes.contains(apIDAmigo)){
+            codigosExistentes.add(apID);
+            Persona persona = new Persona(apID, apNick, apEdad, apSexo);
+            apDatosNetwork.add(persona);
+            apNetworkPresent.add("("+apID+"-"+apSexo+") "+apNick);
+            if (apSexo=='F') {
+                apDatosNetwMujer.add("("+apID+"-"+apSexo+") "+apNick);
+            } else {
+                apDatosNetwHombre.add("("+apID+"-"+apSexo+") "+apNick);
+            }        
         }
-        return ("Se agrego al amigo de tu amigo");
+        return ("\nSe agrego al amigo de tu amigo");
 
     }
 
