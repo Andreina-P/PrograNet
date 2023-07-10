@@ -148,6 +148,7 @@ public class Utility {
 
     }
 
+    //Prueba: fORMA PARA HACER EL CASO 3 DEL MENU. CASO FALLIDO
     public static List<Integer> crearListaEdades() {
         List<Integer> edades = new ArrayList<>();
         edades.add(20);
